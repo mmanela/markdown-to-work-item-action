@@ -39,6 +39,8 @@ _commit_if_needed() {
 	fi
 }
 
+echo "$(ls --recursive)"
+
 # Run the node app to linkify markdown
 node index.js
 
