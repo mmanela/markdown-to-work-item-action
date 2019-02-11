@@ -124,7 +124,7 @@ async function main() {
                         let wid = workItemsToCreate[title];
                         if (wid) {
                             console.log(`Using  WID ${wid}`);
-                            const workItemtUrl = "${azDevUrl}${azDevProject}/_workitems/edit/${wid}"
+                            const workItemtUrl = `${azDevUrl}${azDevProject}/_workitems/edit/${wid}`
                             return `${match} ([AB#${wid}](${workItemtUrl}))`;
                         }
                     }
