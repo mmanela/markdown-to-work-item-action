@@ -8,6 +8,8 @@ const argv = require('minimist')(process.argv.slice(2));
 // Set a max size so we don't parse files that are too large
 const MAX_SIZE = 1024 * 1024 * 5;
 
+const isDebug = !!process.env.debugMode;
+
 // TODO: Instead of just using a glob to scan we should check 
 //const payload = process.env.GITHUB_EVENT_PATH ? require(process.env.GITHUB_EVENT_PATH) : {}
 let pathGlob = process.env.PathGlob || "./readme.md";
@@ -135,7 +137,8 @@ async function main() {
 
 function writeFile(file, newContent) {
 
-    fs.writeFile(file + "2", newContent, (err) => {
+    const newPath = isDebug ? file + "2" : file;
+    fs.writeFile(newPath, newContent, (err) => {
         if (err) {
             console.log(err);
             return;

@@ -42,5 +42,9 @@ _commit_if_needed() {
 # Run the node app to linkify markdown
 node index.js
 
+# Only needed when testing
+#cd data
+#git init
+
 # Commit if dirty
 _commit_if_needed

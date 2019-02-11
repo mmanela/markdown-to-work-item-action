@@ -17,7 +17,8 @@ RUN apt-get update -qq && apt-get install -qqy --no-install-recommends \
 COPY package*.json ./
 RUN npm ci
 
-COPY . /
+COPY entrypoint.sh index.js /
+#COPY data/ data/
 
 RUN chmod +x /entrypoint.sh 
 
