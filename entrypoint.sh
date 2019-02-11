@@ -21,6 +21,11 @@ if [ -z "$GITHUB_EVENT_PATH" ]; then
     exit 1
 fi
 
+if [ -z $GITHUB_TOKEN ]; then
+    echo "GITHUB_TOKEN is not set." >&2
+    exit 1
+fi
+
 # Some Helper Functions
 _git_is_dirty() {
 	[[ -n "$(git status -s)" ]]
@@ -33,8 +38,8 @@ _commit() {
 	git commit -m "GitHub Action: Link docs to Azure Boards Work Items"
 
     echo "Pushing Commit"
-    remote_repo="https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-    git push master:$remote_branch
+    remote_repo="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+    git push $remote_repo master:master
 }
 
 _commit_if_needed() {
