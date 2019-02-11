@@ -31,6 +31,10 @@ _commit() {
     git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 	git add .
 	git commit -m "GitHub Action: Link docs to Azure Boards Work Items"
+
+    echo "Pushing Commit"
+    remote_repo="https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+    git push master:$remote_branch
 }
 
 _commit_if_needed() {
