@@ -38,7 +38,7 @@ if (argv.azDevType) {
 }
 
 let azDevTags = process.env.AZURE_BOARDS_TAGS || "GitHub;Markdown";
-if (argv.azDevProject) {
+if (argv.azDevTags) {
     azDevTags = argv.azDevTags;
 }
 
@@ -124,7 +124,8 @@ async function main() {
                         let wid = workItemsToCreate[title];
                         if (wid) {
                             console.log(`Using  WID ${wid}`);
-                            return `${match} ([AB#${wid}](${azDevUrl}))`;
+                            const workItemtUrl = "${azDevUrl}${azDevProject}/_workitems/edit/${wid}"
+                            return `${match} ([AB#${wid}](${workItemtUrl}))`;
                         }
                     }
 
