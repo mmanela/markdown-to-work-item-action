@@ -39,14 +39,8 @@ _commit_if_needed() {
 	fi
 }
 
-echo "Two up"
-echo "$(ls ../../)"
-
-echo "One up"
-echo "$(ls ../)"
-
 # Run the node app to linkify markdown
-node index.js
+node ../../index.js
 
 # Only needed when testing
 #cd data
