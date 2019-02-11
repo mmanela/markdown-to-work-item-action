@@ -12,7 +12,7 @@ LABEL "maintainer"="Matthew Manela"
 
 RUN apt-get update -qq && apt-get install -qqy --no-install-recommends \
   git \
-  libssl-dev \
+  openssh-client \
 && rm -rf /var/lib/apt/lists/*
 
 COPY package*.json ./
