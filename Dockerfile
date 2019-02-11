@@ -10,9 +10,15 @@ LABEL "repository"="http://github.com/mmanela/markdown-to-work-item-action"
 LABEL "homepage"="http://github.com/mmanela/markdown-to-work-item-action"
 LABEL "maintainer"="Matthew Manela"
 
+RUN apt-get update -qq && apt-get install -qqy --no-install-recommends \
+  git \
+&& rm -rf /var/lib/apt/lists/*
+
 COPY package*.json ./
 RUN npm ci
 
 COPY . /
 
-ENTRYPOINT ["node", "/entrypoint.js"]
+RUN chmod +x /entrypoint.sh 
+
+ENTRYPOINT ["/entrypoint.sh"]

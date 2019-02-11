@@ -2,15 +2,15 @@ const fs = require('fs');
 const azdev = require('azure-devops-node-api');
 const work = require('azure-devops-node-api/WorkItemTrackingApi');
 const vssCoreContracts = require("azure-devops-node-api/interfaces/common/VSSInterfaces");
-const  glob = require("glob");
-const  argv = require('minimist')(process.argv.slice(2));
+const glob = require("glob");
+const argv = require('minimist')(process.argv.slice(2));
 
 // Set a max size so we don't parse files that are too large
 const MAX_SIZE = 1024 * 1024 * 5;
 
 // TODO: Instead of just using a glob to scan we should check 
 //const payload = process.env.GITHUB_EVENT_PATH ? require(process.env.GITHUB_EVENT_PATH) : {}
-let pathGlob = process.env.PathGlob || "readme.md";
+let pathGlob = process.env.PathGlob || "./readme.md";
 if (argv.PathGlob) {
     pathGlob = argv.PathGlob;
 }
@@ -19,6 +19,9 @@ let azDevUrl = "https://dev.azure.com/";
 let azDevOrg = process.env.AZURE_BOARDS_ORGANIZATION;
 if (argv.azDevOrg) {
     azDevOrg = argv.azDevOrg;
+}
+
+if (azDevOrg) {
     azDevUrl += `${azDevOrg}/`
 }
 
@@ -49,25 +52,32 @@ if (!pathGlob) {
     return;
 }
 
-main();
+try {
+    main();
+}
+catch (e) {
+    throw e;
+}
 
 async function main() {
-
-
     let authHandler = azdev.getPersonalAccessTokenHandler(azDevToken);
     let connection = new azdev.WebApi(azDevUrl, authHandler);
     let witApi = await connection.getWorkItemTrackingApi();
 
-    let count = 0;
     glob(pathGlob, null, function (err, files) {
         if (err) {
-            return console.log(err);
+            console.log(err);
+            return;
         }
 
         for (const file of files) {
-
             fs.readFile(file, 'utf8', async function (err, data) {
-
+                
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                
                 if (data.length > MAX_SIZE) {
                     console.log("File too large, bailing out!");
                     return;
@@ -77,6 +87,7 @@ async function main() {
                 let hasChange = false;
 
                 let match;
+                
                 while (match = titleRegex.exec(data)) {
                     let title = match[1];
                     title = title.trim();
@@ -84,6 +95,7 @@ async function main() {
 
                         // TODO: Make this batch
                         try {
+                            
                             let result = await createWorkItem(witApi, azDevProject, azDevType, title, azDevTags);
                             workItemsToCreate[title] = result.id;
 
@@ -122,9 +134,11 @@ async function main() {
 
 
 function writeFile(file, newContent) {
+
     fs.writeFile(file + "2", newContent, (err) => {
         if (err) {
-            throw err;
+            console.log(err);
+            return;
         }
         console.log('complete');
     });
