@@ -9,7 +9,13 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/index.js",
-            "args": ["data/*.md"]
+            "args": [
+                "--PathGlob", "data/*.md",
+                "--azDevOrg", "team",
+                "--azDevProject", "zTest",
+                "--azDevType", "User Story",
+                "--azDevTags", "GitHub;Markdown",
+            ],
         }
     ]
 }

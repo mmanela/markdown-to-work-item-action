@@ -1,0 +1,17 @@
+{
+  "name": "mdtowi",
+  "version": "1.0.0",
+  "description": "npm i glob",
+  "main": "index.js",
+  "dependencies": {
+    "azure-devops-node-api": "^7.0.0",
+    "glob": "^7.1.3",
+    "minimist": "^1.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
