@@ -12,9 +12,9 @@ const isDebug = !!process.env.debugMode;
 
 // TODO: Instead of just using a glob to scan we should check 
 //const payload = process.env.GITHUB_EVENT_PATH ? require(process.env.GITHUB_EVENT_PATH) : {}
-let pathGlob = process.env.PathGlob || "./readme.md";
-if (argv.PathGlob) {
-    pathGlob = argv.PathGlob;
+let pathGlob = process.env.PATH_GLOB || "./readme.md";
+if (argv.pathGlob) {
+    pathGlob = argv.pathGlob;
 }
 
 let azDevUrl = "https://dev.azure.com/";

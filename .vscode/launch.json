@@ -10,7 +10,7 @@
             "name": "Launch Program",
             "program": "${workspaceFolder}/index.js",
             "args": [
-                "--PathGlob", "data/*.md",
+                "--pathGlob", "data/*.md",
                 "--azDevOrg", "team",
                 "--azDevProject", "zTest",
                 "--azDevType", "User Story",
