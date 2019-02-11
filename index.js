@@ -48,7 +48,7 @@ if (argv.azDevToken) {
 }
 
 const titleRegex = /.*?📝(.*?)$/gim;
-const linkRegex = /.*(\(\[ab#\d+\]\(.*?)/gim;
+const linkRegex = /.*(\(\[ab#\d+\]\(.*?)/im;
 
 if (!pathGlob) {
     return;
