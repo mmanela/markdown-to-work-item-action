@@ -68,23 +68,23 @@ async function main() {
 
     console.log(`NB: Processing ${pathGlob} to send to ${azDevUrl}`);
 
-    glob(pathGlob, null, function (err, files) {
+    glob(pathGlob, { nocase: true }, function (err, files) {
         if (err) {
             console.log(err);
             return;
         }
 
         for (const file of files) {
-            
+
             console.log(`NB: Read file ${file}`);
             fs.readFile(file, 'utf8', async function (err, data) {
-                
+
                 console.log(`NB: Got contents of ${file}`);
                 if (err) {
                     console.log(err);
                     return;
                 }
-                
+
                 if (data.length > MAX_SIZE) {
                     console.log("File too large, bailing out!");
                     return;
@@ -94,7 +94,7 @@ async function main() {
                 let hasChange = false;
 
                 let match;
-                
+
                 while (match = titleRegex.exec(data)) {
                     let title = match[1];
                     title = title.trim();
@@ -102,7 +102,7 @@ async function main() {
 
                         // TODO: Make this batch
                         try {
-                            
+
                             console.log(`NB: Creating work item from ${file} with title ${title}`);
                             let result = await createWorkItem(witApi, azDevProject, azDevType, title, azDevTags);
                             workItemsToCreate[title] = result.id;
