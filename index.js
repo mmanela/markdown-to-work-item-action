@@ -66,6 +66,8 @@ async function main() {
     let connection = new azdev.WebApi(azDevUrl, authHandler);
     let witApi = await connection.getWorkItemTrackingApi();
 
+    console.log(`NB: Processing ${pathGlob} to send to ${azDevUrl}`);
+
     glob(pathGlob, null, function (err, files) {
         if (err) {
             console.log(err);
@@ -73,8 +75,11 @@ async function main() {
         }
 
         for (const file of files) {
+            
+            console.log(`NB: Read file ${file}`);
             fs.readFile(file, 'utf8', async function (err, data) {
                 
+                console.log(`NB: Got contents of ${file}`);
                 if (err) {
                     console.log(err);
                     return;
@@ -98,6 +103,7 @@ async function main() {
                         // TODO: Make this batch
                         try {
                             
+                            console.log(`NB: Creating work item from ${file} with title ${title}`);
                             let result = await createWorkItem(witApi, azDevProject, azDevType, title, azDevTags);
                             workItemsToCreate[title] = result.id;
 
@@ -137,6 +143,7 @@ async function main() {
 
 function writeFile(file, newContent) {
 
+    console.log(`NB: Writing contents of ${file}`);
     const newPath = isDebug ? file + "2" : file;
     fs.writeFile(newPath, newContent, (err) => {
         if (err) {
